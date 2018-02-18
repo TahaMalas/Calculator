@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,19 +18,25 @@ import butterknife.OnLongClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DisplayFragment extends Fragment {
+public class DisplayFragment extends Fragment implements CalculatorContract.View {
+
+    private CalculatorContract.DisplayPresenter displayPresenter;
+
+    public void setDisplayPresenter(CalculatorContract.DisplayPresenter displayPresenter) {
+        this.displayPresenter = displayPresenter;
+    }
 
     @BindView(R.id.tv_result)
-    TextView result;
+    TextView resultTV;
 
     @OnClick(R.id.imb_delete)
     public void onDeleteShortClicked (View v) {
-
+        displayPresenter.onShortClearClicked();
     }
 
     @OnLongClick(R.id.imb_delete)
     public void onDeleteLongClicked (View v) {
-
+        displayPresenter.onLongClearClicked();
     }
 
     public DisplayFragment() {
@@ -49,4 +56,13 @@ public class DisplayFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void showResult(String result) {
+        resultTV.setText(result);
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+    }
 }

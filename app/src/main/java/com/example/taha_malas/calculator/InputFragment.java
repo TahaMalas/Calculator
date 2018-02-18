@@ -18,27 +18,33 @@ import butterknife.OnClick;
 public class InputFragment extends Fragment {
 
 
+    private CalculatorContract.InputPresenter inputPresenter;
+
+    public void setInputPresenter (CalculatorContract.InputPresenter inputPresenter) {
+        this.inputPresenter = inputPresenter;
+    }
+
     @OnClick({R.id.btn_number_zero, R.id.btn_number_one, R.id.btn_number_two, R.id.btn_number_three,
             R.id.btn_number_four, R.id.btn_number_five, R.id.btn_number_six, R.id.btn_number_seven,
             R.id.btn_number_eight, R.id.btn_number_nine})
     public void onNumberClick (Button button) {
-
+        inputPresenter.onNumberClicked(Integer.parseInt(button.getText().toString()));
     }
 
     @OnClick({R.id.btn_operator_multiply, R.id.btn_operator_divide, R.id.btn_operator_subtract,
             R.id.btn_operator_add})
     public void onOperationClicked (Button button) {
-
+        inputPresenter.onOperatorClicked(button.getText().toString());
     }
 
     @OnClick(R.id.btn_decimal)
     public void onDecimalClicked (Button button) {
-
+        inputPresenter.onDecimalClicked();
     }
 
     @OnClick(R.id.btn_number_evaluate)
     public void onEvaluateClicked (Button button) {
-
+        inputPresenter.onEvaluateClicked();
     }
 
 
